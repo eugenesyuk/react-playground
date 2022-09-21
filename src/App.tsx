@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Input, Layout, Row, Col, Space } from 'antd'
+import './App.scss'
+import { Content, Header } from 'antd/lib/layout/layout'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout className="layout">
+        <Space direction="vertical" size={50}>
+          <Header className="header">
+            <Row justify="center">
+              <Col span={16}>
+                <h1>React Playground</h1>
+              </Col>
+            </Row>
+          </Header>
+          <Content className="content">
+            <Row justify="center">
+              <Col span={16}>
+                <Input type="text" placeholder="Search..." />
+              </Col>
+            </Row>
+          </Content>
+        </Space>
+      </Layout>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
