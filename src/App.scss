@@ -5,7 +5,7 @@
 }
 
 .layout {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .header {
@@ -15,5 +15,5 @@
 }
 
 .content {
-
+  padding: 50px 0;
 }
