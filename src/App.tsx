@@ -1,48 +1,67 @@
-import { Input, Layout, Row, Col, Space, Table } from 'antd'
-import './App.scss'
-import { Content, Header } from 'antd/lib/layout/layout'
-import { Users } from './data/users'
-import { useEffect, useState } from 'react'
+import { Input, Layout, Row, Col, Space, Table } from "antd";
+import "./App.scss";
+import { Content, Header } from "antd/lib/layout/layout";
+import { Users } from "./data/users";
+import { useEffect, useState } from "react";
 
 const tableColumns = [
   {
-    title: 'Id',
-    dataIndex: 'id',
-    key: 'id',
+    title: "Id",
+    dataIndex: "id",
+    key: "id",
   },
   {
-    title: 'Name',
-    dataIndex: 'first_name',
-    key: 'first_name',
+    title: "Name",
+    dataIndex: "first_name",
+    key: "first_name",
   },
   {
-    title: 'Surname',
-    dataIndex: 'last_name',
-    key: 'last_name',
+    title: "Surname",
+    dataIndex: "last_name",
+    key: "last_name",
   },
   {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email'
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
   },
   {
-    title: 'Gender',
-    dataIndex: 'gender',
-    key: 'gender'
-  }
-]
+    title: "Gender",
+    dataIndex: "gender",
+    key: "gender",
+  },
+];
+
+type User = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  gender: string;
+};
+
+type UserKey = keyof User;
 
 function App() {
-  const [query, setQuery] = useState('');
-  const [users, setUsers] = useState(Users);
+  const [query, setQuery] = useState("");
+  const [users, setUsers] = useState<User[]>(Users);
+
+  const querySearch = (data: User[]) => {
+    const queryLowered: string = query.toLowerCase();
+
+    return data.filter((item: User) => {
+      const keys = Object.keys(item);
+
+      return keys.some((key) =>
+        item[key as UserKey].toString().toLowerCase().includes(queryLowered)
+      );
+    });
+  };
 
   useEffect(() => {
-      const usersFiltered = Users.filter((item) => {
-        return item.first_name.toLowerCase().includes(query.toLowerCase());
-      });
-    
-      setUsers(usersFiltered);
-  }, [query])
+    setUsers(querySearch(Users));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
 
   return (
     <div className="App">
@@ -57,7 +76,7 @@ function App() {
         <Content className="content">
           <Row justify="center">
             <Col span={16}>
-              <Space direction="vertical" size={20}>
+              <Space direction="vertical" size={20} style={{ width: "100%" }}>
                 <Input
                   type="text"
                   placeholder="Search..."
@@ -70,7 +89,7 @@ function App() {
         </Content>
       </Layout>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
